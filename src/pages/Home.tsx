@@ -66,7 +66,7 @@ export default function Home() {
               <p>
                 Spethial.com is a personal website that serves as a homepage, blog, and testing 
                 ground for various technical experiments. It's where ideas go to be explored, 
-                sometimes refined, and occasionally abandoned.
+                sometimes refined, and regularly abandoned.
               </p>
               <p>
                 Built by a Product Manager who codes, this site is proof that with enough 
