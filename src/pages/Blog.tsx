@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import SEO from '@/components/SEO'
+import { TagList } from '@/components/Tag'
 import { getAllPosts } from '@/data/posts'
+import { formatDate } from '@/lib/utils'
 
 export default function Blog() {
   const posts = getAllPosts()
@@ -22,7 +24,6 @@ export default function Blog() {
               Thoughts, experiments, and lessons learned along the way.
             </p>
 
-            {/* Posts List */}
             <div className="space-y-8">
               {posts.length === 0 ? (
                 <div className="card text-center py-12">
@@ -32,18 +33,11 @@ export default function Blog() {
                 </div>
               ) : (
                 posts.map((post) => (
-                  <article
-                    key={post.slug}
-                    className="group"
-                  >
+                  <article key={post.slug} className="group">
                     <Link to={`/blog/${post.slug}`} className="block">
-                      <div className="card hover:border-spethial-accent/50 transition-colors duration-200">
+                      <div className="card hover:border-spethial-accent/50 transition-colors">
                         <time className="text-sm text-gray-500 dark:text-spethial-muted">
-                          {new Date(post.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })}
+                          {formatDate(post.date)}
                         </time>
                         <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-spethial-text mt-2 mb-3 group-hover:text-spethial-accent transition-colors">
                           {post.title}
@@ -51,18 +45,9 @@ export default function Blog() {
                         <p className="text-gray-600 dark:text-spethial-muted">
                           {post.description}
                         </p>
-                        {post.tags && post.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mt-4">
-                            {post.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-2 py-1 text-xs font-medium bg-gray-200 dark:bg-spethial-border text-gray-600 dark:text-spethial-muted rounded"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
+                        <div className="mt-4">
+                          <TagList tags={post.tags} />
+                        </div>
                       </div>
                     </Link>
                   </article>
@@ -75,4 +60,3 @@ export default function Blog() {
     </>
   )
 }
-

@@ -11,31 +11,17 @@
 
   body {
     @apply bg-white text-gray-900 dark:bg-spethial-bg dark:text-spethial-text;
-    @apply font-sans antialiased;
-    @apply min-h-screen;
+    @apply font-sans antialiased min-h-screen;
   }
 
-  /* Selection colors */
   ::selection {
     @apply bg-spethial-accent/30 text-white;
   }
 
-  /* Scrollbar styling for dark mode */
-  .dark ::-webkit-scrollbar {
-    @apply w-2;
-  }
-
-  .dark ::-webkit-scrollbar-track {
-    @apply bg-spethial-bg;
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    @apply bg-spethial-border rounded-full;
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    @apply bg-spethial-muted;
-  }
+  .dark ::-webkit-scrollbar { @apply w-2; }
+  .dark ::-webkit-scrollbar-track { @apply bg-spethial-bg; }
+  .dark ::-webkit-scrollbar-thumb { @apply bg-spethial-border rounded-full; }
+  .dark ::-webkit-scrollbar-thumb:hover { @apply bg-spethial-muted; }
 }
 
 @layer components {
@@ -43,11 +29,23 @@
     @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  .link {
-    @apply text-spethial-accent hover:text-spethial-accent-hover transition-colors duration-200;
-  }
-
   .card {
     @apply bg-gray-100 dark:bg-spethial-surface border border-gray-200 dark:border-spethial-border rounded-lg p-6;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center px-6 py-3 bg-spethial-accent hover:bg-spethial-accent-hover text-white font-medium rounded-lg transition-colors;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center px-6 py-3 bg-gray-200 dark:bg-spethial-surface hover:bg-gray-300 dark:hover:bg-spethial-border text-gray-900 dark:text-spethial-text font-medium rounded-lg border border-gray-300 dark:border-spethial-border transition-colors;
+  }
+
+  .input {
+    @apply w-full px-3 py-2 bg-white dark:bg-spethial-surface border border-gray-200 dark:border-spethial-border rounded-lg text-gray-900 dark:text-spethial-text focus:outline-none focus:ring-2 focus:ring-spethial-accent;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-gray-700 dark:text-spethial-text mb-1;
   }
 }
