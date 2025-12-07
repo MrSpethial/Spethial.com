@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 dark:bg-spethial-bg dark:text-spethial-text;
+    @apply font-sans antialiased;
+    @apply min-h-screen;
+  }
+
+  /* Selection colors */
+  ::selection {
+    @apply bg-spethial-accent/30 text-white;
+  }
+
+  /* Scrollbar styling for dark mode */
+  .dark ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-spethial-bg;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-spethial-border rounded-full;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    @apply bg-spethial-muted;
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .link {
+    @apply text-spethial-accent hover:text-spethial-accent-hover transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-gray-100 dark:bg-spethial-surface border border-gray-200 dark:border-spethial-border rounded-lg p-6;
+  }
+}
