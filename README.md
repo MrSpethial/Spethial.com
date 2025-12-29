@@ -83,6 +83,7 @@ src/
 - **SEO Ready** - Meta tags and Open Graph support on all pages
 - **MDX Blog** - Write blog posts in Markdown with React components
 - **Playground** - Experimental section for testing ideas
+- **Hero Icons** - Consistent icon system using Hero Icons library
 
 ## Adding Blog Posts
 
@@ -115,9 +116,39 @@ This site is configured for deployment on [Vercel](https://vercel.com).
 
 The `vercel.json` file is already configured for SPA routing.
 
+## Icons
+
+This project uses [Hero Icons](https://heroicons.com/) as the standard icon library. All icons are centralized in `src/components/Icons.tsx` for consistency and easy maintenance.
+
+### Using Icons
+
+Import icons from the Icons component:
+
+```tsx
+import { ArrowRightIcon, SunIcon } from '@/components/Icons'
+
+function MyComponent() {
+  return (
+    <button>
+      Next
+      <ArrowRightIcon className="h-5 w-5 ml-2" />
+    </button>
+  )
+}
+```
+
+### Adding New Icons
+
+1. Check if the icon exists in [Hero Icons](https://heroicons.com/)
+2. Import the icon from `@heroicons/react/24/outline` in `src/components/Icons.tsx`
+3. Create a wrapper component following the existing pattern
+4. Export it for use across the application
+
+See `src/components/Icons.tsx` for detailed documentation and examples.
+
 ## Color Palette
 
-The site uses a Cursor-inspired dark theme:
+The site uses a Cursor-inspired dark theme with sky blue accents:
 
 | Token | Hex | Usage |
 |-------|-----|-------|
@@ -126,8 +157,8 @@ The site uses a Cursor-inspired dark theme:
 | `spethial-border` | `#262626` | Borders |
 | `spethial-muted` | `#525252` | Muted text |
 | `spethial-text` | `#e5e5e5` | Primary text |
-| `spethial-accent` | `#3b82f6` | Links, highlights |
-| `spethial-accent-hover` | `#60a5fa` | Hover states |
+| `spethial-accent` | `#0ea5e9` | Links, highlights (sky-500) |
+| `spethial-accent-hover` | `#38bdf8` | Hover states (sky-400) |
 
 ## License
 

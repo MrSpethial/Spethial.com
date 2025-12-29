@@ -14,8 +14,8 @@ export default {
           border: '#262626',
           muted: '#525252',
           text: '#e5e5e5',
-          accent: '#3b82f6',
-          'accent-hover': '#60a5fa',
+          accent: '#0ea5e9',
+          'accent-hover': '#38bdf8',
         },
       },
       fontFamily: {
