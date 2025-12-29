@@ -7,18 +7,13 @@ import Blog from '@/pages/Blog'
 import BlogPost from '@/pages/BlogPost'
 import Playground from '@/pages/Playground'
 import Admin from '@/pages/Admin'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { trackPageView } from '@/lib/analytics'
 
-// Component to track page views on route changes
-function PageViewTracker() {
+function TrackPageViews() {
   const location = useLocation()
-  const { trackPageView } = useAnalytics()
-
   useEffect(() => {
-    // Track page view on initial load and route changes
     trackPageView(location.pathname + location.search)
-  }, [location, trackPageView])
-
+  }, [location])
   return null
 }
 
@@ -26,7 +21,7 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        <PageViewTracker />
+        <TrackPageViews />
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
