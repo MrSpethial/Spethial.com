@@ -12,7 +12,10 @@ import { trackPageView } from '@/lib/analytics'
 function TrackPageViews() {
   const location = useLocation()
   useEffect(() => {
-    trackPageView(location.pathname + location.search)
+    // Small delay to let document.title update after route change
+    setTimeout(() => {
+      trackPageView(location.pathname + location.search, document.title)
+    }, 0)
   }, [location])
   return null
 }

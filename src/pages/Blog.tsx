@@ -3,6 +3,7 @@ import SEO from '@/components/SEO'
 import { TagList } from '@/components/Tag'
 import { getAllPosts } from '@/data/posts'
 import { formatDate } from '@/lib/utils'
+import { trackClick } from '@/lib/analytics'
 
 export default function Blog() {
   const posts = getAllPosts()
@@ -34,7 +35,11 @@ export default function Blog() {
               ) : (
                 posts.map((post) => (
                   <article key={post.slug} className="group">
-                    <Link to={`/blog/${post.slug}`} className="block">
+                    <Link 
+                      to={`/blog/${post.slug}`} 
+                      className="block"
+                      onClick={() => trackClick(post.title, `/blog/${post.slug}`, 'blog_list')}
+                    >
                       <div className="card hover:border-spethial-accent/50 transition-colors">
                         <time className="text-sm text-gray-500 dark:text-spethial-muted">
                           {formatDate(post.date)}

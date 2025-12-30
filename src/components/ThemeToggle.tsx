@@ -1,12 +1,19 @@
 import { useTheme } from '@/hooks/useTheme'
 import { SunIcon, MoonIcon } from './Icons'
+import { trackTheme } from '@/lib/analytics'
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme()
 
+  const handleToggle = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    trackTheme(newTheme)
+    toggleTheme()
+  }
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={handleToggle}
       className="p-2 rounded-lg bg-gray-200 dark:bg-spethial-surface border border-gray-300 dark:border-spethial-border hover:bg-gray-300 dark:hover:bg-spethial-border transition-colors"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >

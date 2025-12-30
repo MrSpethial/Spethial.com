@@ -1,10 +1,11 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import SEO from '@/components/SEO'
 import { TagList } from '@/components/Tag'
 import { ArrowLeftIcon } from '@/components/Icons'
 import { getPostBySlug } from '@/data/posts'
 import { formatDate } from '@/lib/utils'
+import { trackBlogPost } from '@/lib/analytics'
 
 // Dynamically import MDX posts
 const postComponents: Record<string, React.LazyExoticComponent<React.ComponentType>> = {
@@ -18,6 +19,10 @@ export default function BlogPost() {
 
   const post = getPostBySlug(slug)
   const PostContent = postComponents[slug]
+
+  useEffect(() => {
+    if (post) trackBlogPost(post.title, post.slug, post.tags)
+  }, [post])
 
   if (!post || !PostContent) {
     return (

@@ -1,4 +1,5 @@
 import { GitHubIcon } from './Icons'
+import { trackClick } from '@/lib/analytics'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -15,6 +16,7 @@ export default function Footer() {
               href="https://github.com/mrspethial/spethial.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackClick('GitHub', 'https://github.com/mrspethial/spethial.com', 'footer')}
               className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-spethial-muted hover:text-spethial-accent transition-colors underline-offset-4 hover:underline"
               aria-label="View source code on GitHub"
             >

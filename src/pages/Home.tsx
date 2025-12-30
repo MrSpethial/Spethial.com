@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import SEO from '@/components/SEO'
 import MottoDisplay from '@/components/MottoDisplay'
 import { ArrowRightIcon } from '@/components/Icons'
+import { trackClick } from '@/lib/analytics'
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         <div className="container-main">
           <div className="max-w-3xl">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-spethial-text mb-6">
-              Welcome to <span className="text-spethial-accent">Spethial</span>
+              Welcome to <span className="text-spethial-accent">Spethial.com</span>
             </h1>
             
             <div className="mb-8">
@@ -25,11 +26,19 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Link to="/blog" className="btn-primary">
+              <Link 
+                to="/blog" 
+                className="btn-primary"
+                onClick={() => trackClick('Read the Blog', '/blog', 'home_hero')}
+              >
                 Read the Blog
                 <ArrowRightIcon className="h-5 w-5 ml-2" />
               </Link>
-              <Link to="/playground" className="btn-secondary">
+              <Link 
+                to="/playground" 
+                className="btn-secondary"
+                onClick={() => trackClick('Explore Playground', '/playground', 'home_hero')}
+              >
                 Explore Playground
               </Link>
             </div>

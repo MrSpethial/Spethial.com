@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 import { GitHubIcon } from './Icons'
+import { trackClick } from '@/lib/analytics'
 
 const navLinks = [
   { path: '/', label: 'Home' },
@@ -24,6 +25,7 @@ export default function Header() {
               <Link
                 key={path}
                 to={path}
+                onClick={() => trackClick(label, path, 'header')}
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   location.pathname === path
                     ? 'bg-spethial-accent/10 text-spethial-accent'
@@ -38,6 +40,7 @@ export default function Header() {
               href="https://github.com/mrspethial/spethial.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackClick('GitHub', 'https://github.com/mrspethial/spethial.com', 'header')}
               className="p-2 rounded-lg text-gray-600 dark:text-spethial-muted hover:text-gray-900 dark:hover:text-spethial-text hover:bg-gray-100 dark:hover:bg-spethial-surface transition-colors"
               aria-label="GitHub Repository"
             >
