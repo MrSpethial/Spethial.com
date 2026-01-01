@@ -48,11 +48,11 @@ export function trackClick(text: string, url: string, location?: string) {
 }
 
 // Track blog post view
-export function trackBlogPost(title: string, slug: string, tags: string[]) {
+export function trackBlogPost(title: string, slug: string, tags?: string[]) {
   trackEvent('blog_post_view', {
     post_title: title,
     post_slug: slug,
-    post_tags: tags.join(', '),
+    post_tags: tags?.join(', ') || '',
   })
 }
 
