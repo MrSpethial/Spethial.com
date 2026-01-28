@@ -21,7 +21,7 @@ export default function BlogPost() {
   const PostContent = postComponents[slug]
 
   useEffect(() => {
-    if (post) trackBlogPost(post.title, post.slug, post.tags)
+    if (post) trackBlogPost(post.title, post.slug, post.tags ?? [])
   }, [post])
 
   if (!post || !PostContent) {

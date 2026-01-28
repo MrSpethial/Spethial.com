@@ -6,6 +6,7 @@ import { trackClick } from '@/lib/analytics'
 const navLinks = [
   { path: '/', label: 'Home' },
   { path: '/blog', label: 'Blog' },
+  { path: '/travels', label: 'Travels' },
   { path: '/playground', label: 'Playground' },
 ]
 

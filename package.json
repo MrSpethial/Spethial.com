@@ -12,10 +12,12 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@mdx-js/react": "^3.1.1",
+    "@rive-app/react-canvas": "^4.26.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^7.10.1"
+    "react-router-dom": "^7.10.1",
+    "react-simple-maps": "^3.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -25,6 +27,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
+    "@types/react-simple-maps": "^3.0.6",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.22",
     "eslint": "^9.39.1",

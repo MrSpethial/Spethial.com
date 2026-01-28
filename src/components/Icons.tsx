@@ -28,14 +28,25 @@
  * Always prefer Hero Icons for consistency and maintainability.
  */
 
-import { 
+import {
   ArrowLeftIcon as HeroArrowLeftIcon,
   ArrowRightIcon as HeroArrowRightIcon,
   SunIcon as HeroSunIcon,
   MoonIcon as HeroMoonIcon,
   ExclamationTriangleIcon as HeroExclamationTriangleIcon,
   BeakerIcon as HeroBeakerIcon,
+  GlobeAltIcon as HeroGlobeAltIcon,
+  StarIcon as HeroStarIcon,
+  MapPinIcon as HeroMapPinIcon,
+  FunnelIcon as HeroFunnelIcon,
+  MagnifyingGlassIcon as HeroMagnifyingGlassIcon,
+  ChevronDownIcon as HeroChevronDownIcon,
+  XMarkIcon as HeroXMarkIcon,
+  Squares2X2Icon as HeroSquares2X2Icon,
+  ListBulletIcon as HeroListBulletIcon,
 } from '@heroicons/react/24/outline'
+
+import { StarIcon as HeroStarIconSolid } from '@heroicons/react/24/solid'
 
 interface IconProps {
   className?: string
@@ -64,6 +75,47 @@ export function ExclamationTriangleIcon({ className = 'h-5 w-5' }: IconProps) {
 
 export function BeakerIcon({ className = 'h-5 w-5' }: IconProps) {
   return <HeroBeakerIcon className={className} />
+}
+
+// Travel-related icons
+export function GlobeIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroGlobeAltIcon className={className} />
+}
+
+export function StarIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroStarIcon className={className} />
+}
+
+export function StarIconSolid({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroStarIconSolid className={className} />
+}
+
+export function MapPinIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroMapPinIcon className={className} />
+}
+
+export function FunnelIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroFunnelIcon className={className} />
+}
+
+export function SearchIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroMagnifyingGlassIcon className={className} />
+}
+
+export function ChevronDownIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroChevronDownIcon className={className} />
+}
+
+export function XMarkIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroXMarkIcon className={className} />
+}
+
+export function GridIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroSquares2X2Icon className={className} />
+}
+
+export function ListIcon({ className = 'h-5 w-5' }: IconProps) {
+  return <HeroListBulletIcon className={className} />
 }
 
 // GitHub icon is not available in Hero Icons, keeping custom SVG

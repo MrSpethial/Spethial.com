@@ -7,6 +7,7 @@ import Blog from '@/pages/Blog'
 import BlogPost from '@/pages/BlogPost'
 import Playground from '@/pages/Playground'
 import Admin from '@/pages/Admin'
+import Travels from '@/pages/Travels'
 import { trackPageView } from '@/lib/analytics'
 
 function TrackPageViews() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/playground" element={<Playground />} />
+            <Route path="/travels" element={<Travels />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </Layout>
