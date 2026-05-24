@@ -22,23 +22,11 @@ function TrackPageViews() {
   return null
 }
 
-/** Remove index.html static GetSongBPM footer once React /music page is mounted */
-function RemoveStaticGetSongBpmBacklink() {
-  const location = useLocation()
-  useEffect(() => {
-    if (/^\/music\/?$/.test(location.pathname)) {
-      document.getElementById('gsb-backlink')?.remove()
-    }
-  }, [location.pathname])
-  return null
-}
-
 function App() {
   return (
     <HelmetProvider>
       <Router>
         <TrackPageViews />
-        <RemoveStaticGetSongBpmBacklink />
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />

@@ -8,29 +8,7 @@
     <title>Spethial.com</title>
   </head>
   <body>
-    <!-- Static GetSongBPM attribution for API verification (crawlers do not run React) -->
-    <footer
-      id="gsb-backlink"
-      style="max-width: 64rem; margin: 0 auto; padding: 1.5rem 1rem; text-align: center; font-family: system-ui, sans-serif; font-size: 0.875rem; color: #525252;"
-    >
-      <p style="margin: 0 0 0.5rem;">
-        Music analytics BPM data powered by
-        <a href="https://getsongbpm.com" rel="noopener noreferrer" style="color: #0ea5e9;">GetSongBPM</a>.
-      </p>
-      <p style="margin: 0;">
-        <a href="https://getsongbpm.com" rel="noopener noreferrer" style="color: #0ea5e9;">getsongbpm.com</a>
-      </p>
-    </footer>
     <div id="root"></div>
-    <script>
-      // Hide static backlink on non-/music routes (crawlers do not run this script)
-      (function () {
-        if (!/^\/music\/?$/.test(location.pathname)) {
-          var el = document.getElementById('gsb-backlink')
-          if (el) el.remove()
-        }
-      })()
-    </script>
     <script type="module" src="/src/main.tsx"></script>
     <script>
       // Initialize theme from localStorage before React loads to prevent flash

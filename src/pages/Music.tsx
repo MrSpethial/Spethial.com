@@ -139,35 +139,40 @@ export default function Music() {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-spethial-text mb-3">
               Data Sources
             </h2>
-            <p className="text-sm text-gray-600 dark:text-spethial-muted mb-4">
-              Listening stats come from a personal Spotify Extended Streaming History export (
-              {meta.dateRange.first}–{meta.dateRange.last}). Artist genres are from the Spotify Web
-              API. Tempo and BPM enrichment for future updates will use{' '}
+            <p className="text-sm text-gray-600 dark:text-spethial-muted">
+              All charts and rankings come from a personal{' '}
+              <strong>Spotify Extended Streaming History</strong> export (
+              {meta.dateRange.first}–{meta.dateRange.last}). Artist <strong>genres</strong> use the{' '}
               <a
-                href="https://getsongbpm.com"
+                href="https://developer.spotify.com/documentation/web-api"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-spethial-accent hover:text-spethial-accent-hover underline font-medium"
-                onClick={() => {
-                  trackClick('GetSongBPM', 'https://getsongbpm.com', 'music_footer')
-                  trackEvent('music_getsongbpm_click')
-                }}
+                onClick={() =>
+                  trackClick('Spotify Web API', 'https://developer.spotify.com/documentation/web-api', 'music_footer')
+                }
               >
-                GetSongBPM
+                Spotify Web API
               </a>
-              .
-            </p>
-            <p className="text-xs text-gray-500 dark:text-spethial-muted">
-              BPM data powered by{' '}
+              . <strong>BPM</strong> (where shown) comes from{' '}
               <a
-                href="https://getsongbpm.com"
+                href="https://musicbrainz.org"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-spethial-accent hover:underline"
-                onClick={() => trackClick('GetSongBPM', 'https://getsongbpm.com', 'music_footer_bpm')}
               >
-                getsongbpm.com
-              </a>
+                MusicBrainz
+              </a>{' '}
+              +{' '}
+              <a
+                href="https://acousticbrainz.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-spethial-accent hover:underline"
+              >
+                AcousticBrainz
+              </a>{' '}
+              — partial coverage, not every track is in the database.
             </p>
           </div>
         </div>

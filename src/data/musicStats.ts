@@ -270,7 +270,8 @@ export const musicStats = {
       "artist": "SIX60",
       "plays": 119,
       "hours": 7.2,
-      "skipRate": 6.7
+      "skipRate": 6.7,
+      "bpm": 76
     },
     {
       "name": "Don’t Matter To Me (with Michael Jackson)",
@@ -291,7 +292,8 @@ export const musicStats = {
       "artist": "Hybrid Minds",
       "plays": 99,
       "hours": 7.7,
-      "skipRate": 12.1
+      "skipRate": 12.1,
+      "bpm": 172
     },
     {
       "name": "My Own Summer (Shove It)",
@@ -305,7 +307,8 @@ export const musicStats = {
       "artist": "Currents",
       "plays": 96,
       "hours": 6.5,
-      "skipRate": 11.5
+      "skipRate": 11.5,
+      "bpm": 108
     },
     {
       "name": "Scared to Be Lonely - Acoustic Version",
@@ -319,7 +322,8 @@ export const musicStats = {
       "artist": "Miguel",
       "plays": 90,
       "hours": 5.3,
-      "skipRate": 14.4
+      "skipRate": 14.4,
+      "bpm": 87
     },
     {
       "name": "Exogenesis: Symphony Pt. 1 (Overture)",
@@ -361,7 +365,8 @@ export const musicStats = {
       "artist": "Currents",
       "plays": 85,
       "hours": 4.5,
-      "skipRate": 31.8
+      "skipRate": 31.8,
+      "bpm": 152
     },
     {
       "name": "Pickle Rick",
@@ -374,10 +379,10 @@ export const musicStats = {
   "topGenres": [
     {
       "genre": "drum and bass",
-      "hours": 681.3,
-      "pct": 8.9,
+      "hours": 687.4,
+      "pct": 9.0,
       "trend": "rising",
-      "artistCount": 71
+      "artistCount": 74
     },
     {
       "genre": "edm",
@@ -388,10 +393,10 @@ export const musicStats = {
     },
     {
       "genre": "liquid funk",
-      "hours": 590.7,
+      "hours": 595.7,
       "pct": 7.8,
       "trend": "stable",
-      "artistCount": 59
+      "artistCount": 61
     },
     {
       "genre": "classical",
@@ -409,10 +414,10 @@ export const musicStats = {
     },
     {
       "genre": "r&b",
-      "hours": 228.9,
+      "hours": 224.8,
       "pct": 3.0,
       "trend": "falling",
-      "artistCount": 26
+      "artistCount": 25
     },
     {
       "genre": "future bass",
