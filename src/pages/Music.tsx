@@ -5,7 +5,7 @@ import GenreChart from '@/components/music/GenreChart'
 import ArtistCard from '@/components/music/ArtistCard'
 import PodcastList from '@/components/music/PodcastList'
 import { musicStats } from '@/data/musicStats'
-import { trackEvent, trackClick } from '@/lib/analytics'
+import { trackClick } from '@/lib/analytics'
 import { formatYearMonth, listeningYearsSpan } from '@/lib/utils'
 
 export default function Music() {
