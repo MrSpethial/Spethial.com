@@ -54,14 +54,6 @@ export const musicStats = {
       "firstListen": "2017-02-23"
     },
     {
-      "name": "Miracle Tones",
-      "hours": 85.2,
-      "plays": 1987,
-      "skipRate": 3.0,
-      "genres": [],
-      "firstListen": "2024-10-13"
-    },
-    {
       "name": "Wolfgang Amadeus Mozart",
       "hours": 82.0,
       "plays": 1015,
@@ -108,7 +100,7 @@ export const musicStats = {
       "firstListen": "2016-12-21"
     },
     {
-      "name": "PLÜM",
+      "name": "PL\u00dcM",
       "hours": 55.2,
       "plays": 1232,
       "skipRate": 6.6,
@@ -227,37 +219,19 @@ export const musicStats = {
       "skipRate": 16.9,
       "genres": [],
       "firstListen": "2017-01-09"
+    },
+    {
+      "name": "Chris Brown",
+      "hours": 36.8,
+      "plays": 653,
+      "skipRate": 7.7,
+      "genres": [
+        "r&b"
+      ],
+      "firstListen": "2016-12-20"
     }
   ],
   "topTracks": [
-    {
-      "name": "417 Hz Clear Negative Energy",
-      "artist": "Miracle Tones",
-      "plays": 388,
-      "hours": 18.5,
-      "skipRate": 2.6
-    },
-    {
-      "name": "396 Hz Cleanse Fear & Negative Blocks",
-      "artist": "Miracle Tones",
-      "plays": 383,
-      "hours": 18.7,
-      "skipRate": 1.3
-    },
-    {
-      "name": "741 Hz Spiritual Detox",
-      "artist": "Miracle Tones",
-      "plays": 377,
-      "hours": 14.6,
-      "skipRate": 1.6
-    },
-    {
-      "name": "741 Hz Cleanse Aura",
-      "artist": "Miracle Tones",
-      "plays": 374,
-      "hours": 14.9,
-      "skipRate": 9.1
-    },
     {
       "name": "Exogenesis: Symphony Pt. 3 (Redemption)",
       "artist": "Muse",
@@ -270,11 +244,10 @@ export const musicStats = {
       "artist": "SIX60",
       "plays": 119,
       "hours": 7.2,
-      "skipRate": 6.7,
-      "bpm": 76
+      "skipRate": 6.7
     },
     {
-      "name": "Don’t Matter To Me (with Michael Jackson)",
+      "name": "Don\u2019t Matter To Me (with Michael Jackson)",
       "artist": "Drake",
       "plays": 116,
       "hours": 7.5,
@@ -292,8 +265,7 @@ export const musicStats = {
       "artist": "Hybrid Minds",
       "plays": 99,
       "hours": 7.7,
-      "skipRate": 12.1,
-      "bpm": 172
+      "skipRate": 12.1
     },
     {
       "name": "My Own Summer (Shove It)",
@@ -307,8 +279,7 @@ export const musicStats = {
       "artist": "Currents",
       "plays": 96,
       "hours": 6.5,
-      "skipRate": 11.5,
-      "bpm": 108
+      "skipRate": 11.5
     },
     {
       "name": "Scared to Be Lonely - Acoustic Version",
@@ -322,8 +293,7 @@ export const musicStats = {
       "artist": "Miguel",
       "plays": 90,
       "hours": 5.3,
-      "skipRate": 14.4,
-      "bpm": 87
+      "skipRate": 14.4
     },
     {
       "name": "Exogenesis: Symphony Pt. 1 (Overture)",
@@ -354,6 +324,13 @@ export const musicStats = {
       "skipRate": 9.3
     },
     {
+      "name": "Better Days",
+      "artist": "Currents",
+      "plays": 85,
+      "hours": 4.5,
+      "skipRate": 31.8
+    },
+    {
       "name": "So Sick - Acoustic",
       "artist": "Ne-Yo",
       "plays": 85,
@@ -361,19 +338,39 @@ export const musicStats = {
       "skipRate": 27.1
     },
     {
-      "name": "Better Days",
-      "artist": "Currents",
-      "plays": 85,
-      "hours": 4.5,
-      "skipRate": 31.8,
-      "bpm": 152
-    },
-    {
       "name": "Pickle Rick",
-      "artist": "愛THE BLXCK SINATRA死",
+      "artist": "\u611bTHE BLXCK SINATRA\u6b7b",
       "plays": 84,
       "hours": 2.6,
       "skipRate": 13.1
+    },
+    {
+      "name": "Bad To Me (feat. Grace Grundy)",
+      "artist": "Hybrid Minds",
+      "plays": 83,
+      "hours": 5.0,
+      "skipRate": 9.6
+    },
+    {
+      "name": "Thinkin Bout You",
+      "artist": "Frank Ocean",
+      "plays": 82,
+      "hours": 3.7,
+      "skipRate": 13.4
+    },
+    {
+      "name": "Exogenesis: Symphony Pt. 2 (Cross-pollination)",
+      "artist": "Muse",
+      "plays": 81,
+      "hours": 4.5,
+      "skipRate": 12.3
+    },
+    {
+      "name": "Sonata No. 14 \"Moonlight\" in C-Sharp Minor\", Op. 27 No. 2: I. Adagio sostenuto",
+      "artist": "Ludwig van Beethoven",
+      "plays": 80,
+      "hours": 6.3,
+      "skipRate": 6.2
     }
   ],
   "topGenres": [
@@ -415,7 +412,7 @@ export const musicStats = {
     {
       "genre": "r&b",
       "hours": 224.8,
-      "pct": 3.0,
+      "pct": 2.9,
       "trend": "falling",
       "artistCount": 25
     },
