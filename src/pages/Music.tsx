@@ -3,15 +3,16 @@ import MusicStats from '@/components/music/MusicStats'
 import YearChart from '@/components/music/YearChart'
 import GenreChart from '@/components/music/GenreChart'
 import ArtistCard from '@/components/music/ArtistCard'
+import PodcastList from '@/components/music/PodcastList'
 import { musicStats } from '@/data/musicStats'
 import { trackEvent, trackClick } from '@/lib/analytics'
+import { formatYearMonth, listeningYearsSpan } from '@/lib/utils'
 
 export default function Music() {
-  const { meta, overview, topArtists, topTracks, topGenres, byYear } = musicStats
+  const { meta, overview, topArtists, topTracks, topGenres, byYear, topPodcasts } = musicStats
 
-  const yearsSpan =
-    (new Date(meta.dateRange.last).getTime() - new Date(meta.dateRange.first).getTime()) /
-    (365.25 * 24 * 60 * 60 * 1000)
+  const yearsSpan = listeningYearsSpan(meta.dateRange.first, meta.dateRange.last)
+  const busiestMonthLabel = formatYearMonth(overview.busiestMonth.label)
 
   return (
     <>
@@ -38,7 +39,7 @@ export default function Music() {
             {meta.dateRange.first} to {meta.dateRange.last}.
           </p>
           <p className="text-sm text-gray-500 dark:text-spethial-muted">
-            Busiest month: {overview.busiestMonth.label} ({overview.busiestMonth.hours} hrs)
+            Busiest month: {busiestMonthLabel} ({overview.busiestMonth.hours} hrs)
             · Data generated {meta.generatedAt}
           </p>
         </div>
@@ -125,6 +126,11 @@ export default function Music() {
           </div>
         </div>
       </section>
+
+      <PodcastList
+        topPodcasts={topPodcasts}
+        totalPodcastHours={overview.totalPodcastHours}
+      />
 
       {/* Powered by / backlink */}
       <section className="py-10 sm:py-14">

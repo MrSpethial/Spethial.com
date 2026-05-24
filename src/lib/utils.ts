@@ -1,5 +1,24 @@
 // Utility functions
 
+/** `YYYY-MM` → e.g. "February 2018". Returns input unchanged if not parseable. */
+export function formatYearMonth(yearMonth: string): string {
+  const match = yearMonth.match(/^(\d{4})-(\d{2})$/)
+  if (!match) return yearMonth
+  const year = Number(match[1])
+  const month = Number(match[2])
+  const date = new Date(year, month - 1)
+  if (Number.isNaN(date.getTime())) return yearMonth
+  return date.toLocaleString('default', { month: 'long', year: 'numeric' })
+}
+
+/** Years between two ISO date strings; falls back if dates are invalid. */
+export function listeningYearsSpan(first: string, last: string, fallback = 9.5): number {
+  const span =
+    (new Date(last).getTime() - new Date(first).getTime()) /
+    (365.25 * 24 * 60 * 60 * 1000)
+  return Number.isFinite(span) && span > 0 ? span : fallback
+}
+
 export function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString('en-US', {
     year: 'numeric',
