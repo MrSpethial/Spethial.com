@@ -1,32 +1,10 @@
-import { GitHubIcon } from './Icons'
-import { trackClick } from '@/lib/analytics'
-
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
-
   return (
-    <footer className="border-t border-gray-200 dark:border-spethial-border py-8 mt-auto">
-      <div className="container-main">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-600 dark:text-spethial-muted">
-            © {currentYear} Spethial.com. Built with caffeine and curiosity.
-          </p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://github.com/mrspethial/spethial.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackClick('GitHub', 'https://github.com/mrspethial/spethial.com', 'footer')}
-              className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-spethial-muted hover:text-spethial-accent transition-colors underline-offset-4 hover:underline"
-              aria-label="View source code on GitHub"
-            >
-              <GitHubIcon className="h-4 w-4" />
-              <span>View on GitHub</span>
-            </a>
-          </div>
-        </div>
+    <footer className="py-12 border-t mt-auto" style={{ borderColor: 'var(--hairline)', color: 'var(--ink-mute)', fontFamily: 'var(--font-mono)', fontSize: 'var(--fs-xs)', letterSpacing: 'var(--tr-base)' }}>
+      <div className="flex items-center justify-between max-w-[var(--container)] mx-auto px-[var(--gutter)]">
+        <span>© 2026 Spethial · built with caffeine and curiosity</span>
+        <span>v0.1.0</span>
       </div>
     </footer>
   )
 }
-

@@ -11,34 +11,21 @@ export default function ArtistCard({ artist, rank }: ArtistCardProps) {
   return (
     <article className="card p-4 sm:p-5">
       <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="text-xs font-mono text-gray-400 dark:text-spethial-muted">
-          #{rank}
-        </span>
-        <span className="text-xs text-gray-500 dark:text-spethial-muted tabular-nums">
-          {artist.skipRate}% skip
-        </span>
+        <span className="text-xs font-mono" style={{ color: 'var(--ink-faint)' }}>#{rank}</span>
+        <span className="text-xs tabular-nums" style={{ color: 'var(--ink-mute)' }}>{artist.skipRate}% skip</span>
       </div>
-      <h3 className="font-semibold text-gray-900 dark:text-spethial-text mb-2 line-clamp-2">
-        {artist.name}
-      </h3>
-      <p className="text-2xl font-bold text-spethial-accent mb-3 tabular-nums">
+      <h3 className="font-medium mb-2 line-clamp-2">{artist.name}</h3>
+      <p className="text-2xl font-medium text-sp-teal mb-3 tabular-nums">
         {artist.hours}
-        <span className="text-sm font-normal text-gray-500 dark:text-spethial-muted ml-1">
-          hrs
-        </span>
+        <span className="text-sm font-normal ml-1" style={{ color: 'var(--ink-mute)' }}>hrs</span>
       </p>
-      <p className="text-xs text-gray-500 dark:text-spethial-muted mb-3">
+      <p className="text-xs mb-3" style={{ color: 'var(--ink-mute)' }}>
         {artist.plays.toLocaleString()} plays · since {artist.firstListen}
       </p>
       {artist.genres.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {artist.genres.map((genre) => (
-            <span
-              key={genre}
-              className="text-[10px] px-2 py-0.5 rounded-full bg-gray-200 dark:bg-spethial-border text-gray-700 dark:text-spethial-muted"
-            >
-              {genre}
-            </span>
+            <span key={genre} className="tag text-[10px]">{genre}</span>
           ))}
         </div>
       )}

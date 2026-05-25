@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import SEO from '@/components/SEO'
 import TravelCard from '@/components/travel/TravelCard'
-import TravelStats from '@/components/travel/TravelStats'
+
 import TravelFilters from '@/components/travel/TravelFilters'
 import TravelTimeline from '@/components/travel/TravelTimeline'
 import TravelMap from '@/components/travel/TravelMap'
@@ -23,13 +23,11 @@ export default function Travels() {
   const stats = getTravelStats()
   const allTravels = getAllTravels()
 
-  // Filter and sort travels
   const filteredTravels = useMemo(() => {
     const filtered = filterTravels(filters)
     return sortTravels(filtered, sortBy)
   }, [filters, sortBy])
 
-  // Handlers
   const handleFiltersChange = (newFilters: TravelFiltersType) => {
     setFilters(newFilters)
     if (Object.keys(newFilters).length > 0) {
@@ -49,7 +47,6 @@ export default function Travels() {
 
   const handleCountryClick = (countryCode: string) => {
     if (filters.country === countryCode) {
-      // If already filtered by this country, clear the filter
       setFilters({ ...filters, country: undefined })
     } else {
       setFilters({ ...filters, country: countryCode })
@@ -61,22 +58,32 @@ export default function Travels() {
     <>
       <SEO
         title="Travels"
-        description="Explore my travel adventures around the world. Discover favorite destinations, recommendations, and travel memories."
+        description="Explore travel adventures around the world. Favourite destinations, recommendations, and memories."
       />
 
-      {/* Hero Section with Map */}
-      <section className="py-12 sm:py-16 border-b border-gray-200 dark:border-spethial-border">
+      {/* Page Header */}
+      <header className="pt-24 pb-12">
         <div className="container-main">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-spethial-text mb-4">
-              My Travels
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-spethial-muted max-w-2xl mx-auto">
-              A collection of places I've been, memories I've made, and recommendations from my adventures around the world.
-            </p>
-          </div>
+          <div className="t-eyebrow mb-2" style={{ color: 'var(--ink-faint)' }}>§ Travels</div>
+          <h1 className="text-[clamp(40px,5vw,64px)] font-light tracking-[-0.03em] leading-[1.02] max-w-[18ch] mb-6">
+            Places I've <b className="font-normal text-sp-teal">been.</b>
+          </h1>
+          <p className="max-w-[56ch] text-lg leading-[1.7]" style={{ color: 'var(--ink-soft)' }}>
+            A collection of places I've visited, memories I've made, and recommendations from adventures around the world.
+          </p>
 
-          {/* Interactive Map */}
+          {/* Stat strip */}
+          <div className="flex gap-8 mt-6 font-mono text-xs tracking-[0.08em] uppercase" style={{ color: 'var(--ink-mute)' }}>
+            <span><span className="text-sp-teal font-medium">{stats.totalCountries}</span> countries</span>
+            <span><span className="text-sp-teal font-medium">{stats.totalCities}</span> cities</span>
+            <span><span className="text-sp-amber font-medium">{stats.favoriteCount}</span> favourites</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Map */}
+      <section className="pb-12">
+        <div className="container-main">
           <TravelMap
             travels={allTravels}
             onCountryClick={handleCountryClick}
@@ -85,17 +92,9 @@ export default function Travels() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-8 sm:py-12 border-b border-gray-200 dark:border-spethial-border">
+      {/* Content */}
+      <section className="py-10 border-t" style={{ borderColor: 'var(--hairline)' }}>
         <div className="container-main">
-          <TravelStats stats={stats} />
-        </div>
-      </section>
-
-      {/* Main Content Section */}
-      <section className="py-8 sm:py-12">
-        <div className="container-main">
-          {/* Filters */}
           <div className="mb-8">
             <TravelFilters
               filters={filters}
@@ -108,40 +107,23 @@ export default function Travels() {
             />
           </div>
 
-          {/* Empty State */}
           {filteredTravels.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-lg text-gray-500 dark:text-spethial-muted mb-4">
-                No destinations match your filters.
-              </p>
-              <button
-                onClick={() => setFilters({})}
-                className="btn-primary"
-              >
-                Clear all filters
-              </button>
+              <p className="text-lg mb-4" style={{ color: 'var(--ink-mute)' }}>No destinations match your filters.</p>
+              <button onClick={() => setFilters({})} className="btn btn-primary">Clear all filters</button>
             </div>
           )}
 
-          {/* Grid View */}
           {viewMode === 'grid' && filteredTravels.length > 0 && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredTravels.map((travel) => (
-                <TravelCard
-                  key={travel.id}
-                  travel={travel}
-                  onCountryClick={handleCountryClick}
-                />
+                <TravelCard key={travel.id} travel={travel} onCountryClick={handleCountryClick} />
               ))}
             </div>
           )}
 
-          {/* Timeline View */}
           {viewMode === 'timeline' && filteredTravels.length > 0 && (
-            <TravelTimeline
-              travels={filteredTravels}
-              onCountryClick={handleCountryClick}
-            />
+            <TravelTimeline travels={filteredTravels} onCountryClick={handleCountryClick} />
           )}
         </div>
       </section>

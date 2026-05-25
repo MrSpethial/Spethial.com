@@ -21,11 +21,11 @@ function markdownToHtml(md: string): string {
     .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mt-8 mb-4">$1</h1>')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/```([\s\S]*?)```/g, '<pre class="bg-spethial-surface p-4 rounded-lg my-4"><code>$1</code></pre>')
-    .replace(/`(.*?)`/g, '<code class="bg-spethial-surface px-1 rounded text-spethial-accent">$1</code>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-spethial-accent hover:underline">$1</a>')
+    .replace(/```([\s\S]*?)```/g, '<pre class="bg-sp-surface p-4 rounded-lg my-4"><code>$1</code></pre>')
+    .replace(/`(.*?)`/g, '<code class="bg-sp-surface px-1 rounded text-sp-teal">$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-sp-teal hover:underline">$1</a>')
     .replace(/^- (.*$)/gm, '<li class="ml-4">$1</li>')
-    .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-spethial-accent pl-4 italic my-4">$1</blockquote>')
+    .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-sp-teal pl-4 italic my-4">$1</blockquote>')
     .replace(/\n\n/g, '</p><p class="my-4">')
 }
 
@@ -124,9 +124,9 @@ export default function Admin() {
         <SEO title="Admin" />
         <section className="py-16 sm:py-24">
           <div className="container-main text-center">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-spethial-text mb-4">Admin Panel</h1>
-            <p className="text-gray-600 dark:text-spethial-muted">
-              Only available in development. Run <code className="bg-spethial-surface px-2 py-1 rounded">npm run dev</code>
+            <h1 className="text-3xl font-bold text-sp-ink mb-4">Admin Panel</h1>
+            <p className="text-sp-ink-mute">
+              Only available in development. Run <code className="bg-sp-surface px-2 py-1 rounded">npm run dev</code>
             </p>
           </div>
         </section>
@@ -141,8 +141,8 @@ export default function Admin() {
         <div className="container-main">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-spethial-text">Blog Admin</h1>
-              <p className="text-sm text-gray-600 dark:text-spethial-muted mt-1">
+              <h1 className="text-2xl sm:text-3xl font-bold text-sp-ink">Blog Admin</h1>
+              <p className="text-sm text-sp-ink-mute mt-1">
                 {isEditing ? `Editing: ${selectedPost}` : 'Create a new blog post'}
               </p>
             </div>
@@ -157,7 +157,7 @@ export default function Admin() {
           </div>
 
           {message && (
-            <div className={`mb-6 p-4 rounded-lg border ${message.type === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-800' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border-red-200 dark:border-red-800'}`}>
+            <div className={`mb-6 p-4 rounded-lg border ${message.type === 'success' ? 'bg-sp-teal-soft text-sp-teal border-sp-teal' : 'bg-sp-amber-soft text-sp-amber border-sp-amber'}`}>
               {message.text}
             </div>
           )}
@@ -172,7 +172,7 @@ export default function Admin() {
                 <div>
                   <label className="label">Slug</label>
                   <input type="text" value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} className="input font-mono text-sm" placeholder="my-awesome-post" required disabled={isEditing} />
-                  <p className="text-xs text-gray-500 dark:text-spethial-muted mt-1">URL: /blog/{form.slug || 'your-post-slug'}</p>
+                  <p className="text-xs text-sp-ink-mute mt-1">URL: /blog/{form.slug || 'your-post-slug'}</p>
                 </div>
               </div>
               
@@ -203,7 +203,7 @@ export default function Admin() {
               </div>
               <div>
                 <label className="label">Preview</label>
-                <div className="h-[500px] p-4 bg-white dark:bg-spethial-surface border border-gray-200 dark:border-spethial-border rounded-lg overflow-auto prose prose-sm dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: preview }} />
+                <div className="h-[500px] p-4 bg-sp-bg-elev-1 border border-sp-border rounded-lg overflow-auto prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: preview }} />
               </div>
             </div>
 

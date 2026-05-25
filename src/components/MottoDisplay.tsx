@@ -11,7 +11,7 @@ export default function MottoDisplay() {
   if (!motto) return null
 
   return (
-    <p className="text-sm md:text-base text-spethial-muted dark:text-spethial-muted italic">
+    <p className="text-sm md:text-base italic" style={{ color: 'var(--ink-mute)' }}>
       {motto}
     </p>
   )
