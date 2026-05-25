@@ -6,12 +6,11 @@ import ArtistCard from '@/components/music/ArtistCard'
 import PodcastList from '@/components/music/PodcastList'
 import { musicStats } from '@/data/musicStats'
 import { trackClick } from '@/lib/analytics'
-import { formatYearMonth, listeningYearsSpan } from '@/lib/utils'
+import { listeningYearsSpan } from '@/lib/utils'
 
 export default function Music() {
   const { meta, overview, topArtists, topTracks, topGenres, byYear, topPodcasts } = musicStats
   const yearsSpan = listeningYearsSpan(meta.dateRange.first, meta.dateRange.last)
-  const busiestMonthLabel = formatYearMonth(overview.busiestMonth.label)
 
   return (
     <>
