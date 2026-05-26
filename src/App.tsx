@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import Layout from '@/components/Layout'
@@ -9,15 +9,24 @@ import Lab from '@/pages/Lab'
 import Admin from '@/pages/Admin'
 import Travels from '@/pages/Travels'
 import Music from '@/pages/Music'
-import { trackPageView } from '@/lib/analytics'
+import { trackPageViewAfterTitle } from '@/lib/analytics'
 
 function TrackPageViews() {
   const location = useLocation()
+  const isFirstNavigation = useRef(true)
+
   useEffect(() => {
-    setTimeout(() => {
-      trackPageView(location.pathname + location.search, document.title)
-    }, 0)
+    const path = location.pathname + location.search
+
+    // Initial page_view is sent by the HTML gtag snippet in index.html
+    if (isFirstNavigation.current) {
+      isFirstNavigation.current = false
+      return
+    }
+
+    return trackPageViewAfterTitle(path)
   }, [location])
+
   return null
 }
 

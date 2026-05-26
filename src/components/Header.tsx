@@ -18,6 +18,7 @@ export default function Header() {
       <nav className="flex items-center justify-between py-5 max-w-[var(--container)] mx-auto px-[var(--gutter)]">
         <Link
           to="/"
+          onClick={() => trackClick('spethial', '/', 'header_logo')}
           className="flex items-center gap-2.5 font-mono text-sm tracking-[0.08em] text-sp-ink hover:text-sp-ink transition-colors"
         >
           <span className="w-2 h-2 rounded-full bg-sp-teal" style={{ boxShadow: '0 0 12px var(--teal-glow)' }} />

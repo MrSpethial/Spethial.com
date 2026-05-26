@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import SEO from '@/components/SEO'
+import { trackEvent } from '@/lib/analytics'
 
 type Status = 'Live' | 'Draft' | 'Experiment' | 'Archived'
 type Category = 'Components' | 'Data Viz' | 'Shaders' | 'API'
@@ -52,6 +53,11 @@ const thumbStyles: Record<string, React.CSSProperties> = {
 
 export default function Lab() {
   const [filter, setFilter] = useState<string>('All')
+
+  function applyFilter(value: string, source: 'category' | 'chip') {
+    setFilter(value)
+    trackEvent('lab_filter', { filter: value, filter_source: source })
+  }
 
   const filtered = filter === 'All' ? experiments
     : ['Live', 'Draft'].includes(filter) ? experiments.filter(e => e.status === filter)
@@ -112,7 +118,7 @@ export default function Lab() {
             {categories.map(cat => (
               <button
                 key={cat.name}
-                onClick={() => setFilter(cat.name)}
+                onClick={() => applyFilter(cat.name, 'category')}
                 className="card flex flex-col gap-2 min-h-[140px] text-left cursor-pointer hover:!border-sp-teal"
               >
                 <div className="flex items-center gap-2.5 mb-3">
@@ -149,7 +155,7 @@ export default function Lab() {
             {['All', 'Components', 'Data Viz', 'Shaders', 'API', 'Live', 'Draft'].map(f => (
               <button
                 key={f}
-                onClick={() => setFilter(f)}
+                onClick={() => applyFilter(f, 'chip')}
                 className={`chip ${filter === f ? 'chip-active' : ''}`}
               >
                 {f}

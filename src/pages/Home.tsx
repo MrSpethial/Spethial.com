@@ -157,6 +157,7 @@ export default function Home() {
               <Link
                 key={proto.id}
                 to="/lab"
+                onClick={() => trackClick(proto.title, '/lab', 'home_prototype')}
                 className="flex flex-col gap-3 min-h-[280px] relative cursor-pointer transition-colors duration-[var(--dur)] hover:bg-sp-bg-elev-1 group"
                 style={{ background: 'var(--bg)', padding: 'var(--s-6)' }}
               >

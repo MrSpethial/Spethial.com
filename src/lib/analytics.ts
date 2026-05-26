@@ -17,11 +17,18 @@ function gtagReady(): boolean {
   return analyticsEnabled && typeof window.gtag === 'function'
 }
 
+/** Paths excluded from SPA page_view updates (initial HTML snippet may still fire once). */
+function isExcludedPath(path: string): boolean {
+  return path === '/admin' || path.startsWith('/admin?')
+}
+
 // Track page view (SPA route changes)
 export function trackPageView(path?: string, title?: string) {
   if (!gtagReady() || !measurementId) return
 
   const pagePath = path ?? window.location.pathname + window.location.search
+  if (isExcludedPath(pagePath)) return
+
   const pageTitle = title ?? document.title
 
   window.gtag('config', measurementId, {
@@ -29,6 +36,27 @@ export function trackPageView(path?: string, title?: string) {
     page_title: pageTitle,
     send_page_view: true,
   })
+}
+
+/**
+ * Defer page_view until after react-helmet-async updates document.title.
+ * Returns a cleanup function to cancel if the route changes again quickly.
+ */
+export function trackPageViewAfterTitle(path: string): () => void {
+  if (!gtagReady() || !measurementId || isExcludedPath(path)) return () => {}
+
+  let cancelled = false
+  const run = () => {
+    if (!cancelled) trackPageView(path, document.title)
+  }
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(run)
+  })
+
+  return () => {
+    cancelled = true
+  }
 }
 
 // Track custom event
@@ -53,9 +81,4 @@ export function trackBlogPost(title: string, slug: string, tags: string[]) {
     post_slug: slug,
     post_tags: tags.join(', '),
   })
-}
-
-// Track theme toggle
-export function trackTheme(theme: 'dark' | 'light') {
-  trackEvent('theme_toggle', { theme })
 }
