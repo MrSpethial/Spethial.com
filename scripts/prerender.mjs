@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Prerender public routes into dist/ using Puppeteer + vite preview.
- * Skip with VITE_PRERENDER_SKIP=1 (e.g. CI without Chromium).
+ * Skip with VITE_PRERENDER_SKIP=1.
+ * On Vercel uses @sparticuz/chromium (stock Puppeteer Chrome misses system libs).
  */
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
@@ -29,26 +30,39 @@ function getFreePort() {
   })
 }
 
+/** @returns {Promise<import('puppeteer').Browser>} */
+async function launchBrowser() {
+  const useVercelChromium = process.env.VERCEL === '1'
+
+  if (useVercelChromium) {
+    const chromium = (await import('@sparticuz/chromium')).default
+    const puppeteer = (await import('puppeteer-core')).default
+    return puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    })
+  }
+
+  const puppeteer = (await import('puppeteer')).default
+  return puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  })
+}
+
 if (process.env.VITE_PRERENDER_SKIP === '1') {
   console.log('prerender: skipped (VITE_PRERENDER_SKIP=1)')
   process.exit(0)
 }
-
-const port = await getFreePort()
 
 if (!fs.existsSync(distDir)) {
   console.error('prerender: dist/ not found. Run vite build first.')
   process.exit(1)
 }
 
-let puppeteer
-try {
-  puppeteer = (await import('puppeteer')).default
-} catch {
-  console.warn('prerender: puppeteer not installed — skipping static HTML generation')
-  process.exit(0)
-}
-
+const port = await getFreePort()
 const paths = getPrerenderPaths()
 let previewLog = ''
 const preview = spawn('npx', ['vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'], {
@@ -97,22 +111,18 @@ function killPreview() {
 }
 
 preview.on('error', err => {
-  console.error('prerender: failed to start preview server', err)
-  process.exit(1)
+  console.warn('prerender: preview server failed — skipping:', err.message)
+  process.exit(0)
 })
 
 try {
   await waitForServer()
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  })
+  const browser = await launchBrowser()
   const page = await browser.newPage()
 
   for (const routePath of paths) {
     const url = `http://127.0.0.1:${port}${routePath}`
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 60_000 })
-    // Allow react-helmet-async to flush title/meta into head
     await page.waitForFunction(() => document.title.length > 0, { timeout: 10_000 })
     const html = await page.content()
     writeRouteHtml(routePath, html)
@@ -122,8 +132,10 @@ try {
   await browser.close()
   console.log(`prerender: done (${paths.length} routes)`)
 } catch (err) {
-  console.error('prerender:', err)
-  process.exit(1)
+  console.warn(
+    'prerender: skipped — build continues without static HTML per route.',
+    err instanceof Error ? err.message : err
+  )
 } finally {
   killPreview()
 }
