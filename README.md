@@ -116,6 +116,31 @@ This site is configured for deployment on [Vercel](https://vercel.com).
 
 The `vercel.json` file is already configured for SPA routing.
 
+### Google Analytics (GA4)
+
+Analytics only runs in **production builds** (`npm run build`). `npm run dev` does not send hits unless you opt in (see below).
+
+1. Copy [`.env.example`](.env.example) to `.env.local` and set your Measurement ID (`G-XXXXXXXXXX` from GA4 → Admin → Data streams → Web).
+2. In **Vercel → Project → Settings → Environment Variables**, add:
+   - **Name:** `VITE_GA_MEASUREMENT_ID`
+   - **Value:** your `G-…` ID
+   - **Environment:** Production (and Preview if desired)
+3. **Redeploy** after changing env vars (Vite inlines them at build time).
+
+**Test locally:**
+
+```bash
+# .env.local must contain VITE_GA_MEASUREMENT_ID=G-...
+npm run build
+npm run preview
+```
+
+Open `http://localhost:4173`, then in DevTools → Network, confirm a request to `googletagmanager.com/gtag/js?id=G-…`. Check GA4 **Reports → Realtime** (allow 1–2 minutes). Disable ad blockers while testing.
+
+**Optional:** `VITE_GA_ENABLE_IN_DEV=true` in `.env.local` loads GA during `npm run dev`.
+
+Production builds **fail** if `VITE_GA_MEASUREMENT_ID` is missing (set `VITE_GA_SKIP_VALIDATION=1` only for CI without secrets).
+
 ## Icons
 
 This project uses [Hero Icons](https://heroicons.com/) as the standard icon library. All icons are centralized in `src/components/Icons.tsx` for consistency and easy maintenance.

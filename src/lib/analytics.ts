@@ -1,4 +1,4 @@
-// Google Analytics types
+// Google Analytics types (gtag is defined by the snippet injected in index.html at build time)
 declare global {
   interface Window {
     dataLayer: unknown[]
@@ -6,35 +6,34 @@ declare global {
   }
 }
 
-// Initialize Google Analytics (only in production)
-const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID
+const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
+const enableInDev = import.meta.env.VITE_GA_ENABLE_IN_DEV === 'true'
+const analyticsEnabled =
+  Boolean(measurementId) &&
+  (import.meta.env.PROD || enableInDev) &&
+  typeof window !== 'undefined'
 
-if (import.meta.env.PROD && measurementId && typeof window !== 'undefined') {
-  window.dataLayer = window.dataLayer || []
-  window.gtag = function(...args: unknown[]) {
-    window.dataLayer.push(args)
-  }
-  window.gtag('js', new Date())
-  window.gtag('config', measurementId)
-
-  const script = document.createElement('script')
-  script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
-  document.head.appendChild(script)
+function gtagReady(): boolean {
+  return analyticsEnabled && typeof window.gtag === 'function'
 }
 
-// Track page view
+// Track page view (SPA route changes)
 export function trackPageView(path?: string, title?: string) {
-  if (!import.meta.env.PROD || !measurementId || !window.gtag) return
+  if (!gtagReady() || !measurementId) return
+
+  const pagePath = path ?? window.location.pathname + window.location.search
+  const pageTitle = title ?? document.title
+
   window.gtag('config', measurementId, {
-    page_path: path || window.location.pathname + window.location.search,
-    page_title: title || document.title,
+    page_path: pagePath,
+    page_title: pageTitle,
+    send_page_view: true,
   })
 }
 
 // Track custom event
 export function trackEvent(eventName: string, params?: Record<string, unknown>) {
-  if (!import.meta.env.PROD || !window.gtag) return
+  if (!gtagReady()) return
   window.gtag('event', eventName, params)
 }
 

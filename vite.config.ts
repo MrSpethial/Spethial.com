@@ -1,11 +1,11 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
 import path from 'path'
 import fs from 'fs'
-import type { ViteDevServer } from 'vite'
+import type { ConfigEnv, UserConfig, ViteDevServer } from 'vite'
 
 // Blog post API middleware (dev mode only)
 function blogApiPlugin() {
@@ -156,9 +156,72 @@ function blogApiPlugin() {
   }
 }
 
+function getGaEnv(mode: string) {
+  return loadEnv(mode, process.cwd(), '')
+}
+
+function shouldEnableGa(env: Record<string, string>, mode: string): boolean {
+  if (env.VITE_GA_SKIP_VALIDATION === '1') return false
+  if (!env.VITE_GA_MEASUREMENT_ID?.trim()) return false
+  return mode === 'production' || env.VITE_GA_ENABLE_IN_DEV === 'true'
+}
+
+function assertValidMeasurementId(id: string): void {
+  if (!/^G-[A-Z0-9]+$/i.test(id)) {
+    throw new Error(
+      `VITE_GA_MEASUREMENT_ID must look like G-XXXXXXXXXX (got "${id}")`
+    )
+  }
+}
+
+/** Fail production builds when GA4 measurement ID is missing (prevents silent no-op analytics). */
+function googleAnalyticsEnvPlugin() {
+  return {
+    name: 'google-analytics-env',
+    config(_config: UserConfig, { mode, command }: ConfigEnv) {
+      if (command !== 'build' || mode !== 'production') return
+      const env = getGaEnv(mode)
+      if (env.VITE_GA_SKIP_VALIDATION === '1') return
+      const id = env.VITE_GA_MEASUREMENT_ID?.trim()
+      if (!id) {
+        throw new Error(
+          'VITE_GA_MEASUREMENT_ID is required for production builds. ' +
+            'Set it in Vercel (Production) or .env.local, then redeploy. ' +
+            'To skip: VITE_GA_SKIP_VALIDATION=1'
+        )
+      }
+      assertValidMeasurementId(id)
+    },
+    transformIndexHtml(html: string) {
+      const mode =
+        process.env.NODE_ENV === 'production' ? 'production' : 'development'
+      const env = getGaEnv(mode)
+      if (!shouldEnableGa(env, mode)) return html
+
+      const id = env.VITE_GA_MEASUREMENT_ID!.trim()
+      assertValidMeasurementId(id)
+
+      // Official gtag snippet in HTML — loads before the React bundle so collect requests fire.
+      const snippet = `
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', '${id}', { send_page_view: true });
+    </script>`
+
+      return html.replace('<head>', `<head>${snippet}`)
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    googleAnalyticsEnvPlugin(),
     blogApiPlugin(),
     {
       enforce: 'pre',
