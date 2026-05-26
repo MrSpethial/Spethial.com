@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
 import { trackEvent } from '@/lib/analytics'
 
 type Status = 'Live' | 'Draft' | 'Experiment' | 'Archived'
@@ -65,7 +65,7 @@ export default function Lab() {
 
   return (
     <>
-      <SEO
+      <PageSEO
         title="Lab"
         description="Prototypes, components, shaders, data toys and other unfinished artefacts."
       />

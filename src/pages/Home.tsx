@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
+import { personJsonLd, websiteJsonLd } from '@/lib/jsonLd'
 import BrainCanvas from '@/components/BrainCanvas'
 import { trackClick } from '@/lib/analytics'
 
@@ -13,7 +14,10 @@ const prototypes = [
 export default function Home() {
   return (
     <>
-      <SEO title="Neural Constellation" />
+      <PageSEO
+        title="Neural Constellation"
+        jsonLd={[websiteJsonLd(), personJsonLd()]}
+      />
 
       {/* Hero */}
       <header

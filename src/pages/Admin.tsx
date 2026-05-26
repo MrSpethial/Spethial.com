@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import MarkdownEditor from '@/components/MarkdownEditor'
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
 import { generateSlug } from '@/lib/utils'
 
 interface PostData {
@@ -121,7 +121,7 @@ export default function Admin() {
   if (!import.meta.env.DEV) {
     return (
       <>
-        <SEO title="Admin" />
+        <PageSEO title="Admin" noIndex={import.meta.env.PROD} />
         <section className="py-16 sm:py-24">
           <div className="container-main text-center">
             <h1 className="text-3xl font-bold text-sp-ink mb-4">Admin Panel</h1>
@@ -136,7 +136,7 @@ export default function Admin() {
 
   return (
     <>
-      <SEO title="Admin" />
+      <PageSEO title="Admin" noIndex={import.meta.env.PROD} />
       <section className="py-8 sm:py-12">
         <div className="container-main">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">

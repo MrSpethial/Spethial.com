@@ -1,4 +1,4 @@
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
 import MusicStats from '@/components/music/MusicStats'
 import YearChart from '@/components/music/YearChart'
 import GenreChart from '@/components/music/GenreChart'
@@ -14,10 +14,9 @@ export default function Music() {
 
   return (
     <>
-      <SEO
+      <PageSEO
         title="Music Analytics"
         description="Nine years of Spotify listening history — top artists, genres, and listening patterns."
-        canonical="https://spethial.com/music"
       />
 
       {/* Page Header */}

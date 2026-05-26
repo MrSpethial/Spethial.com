@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
+import { blogIndexJsonLd } from '@/lib/jsonLd'
 import { TagList } from '@/components/Tag'
 import { getAllPosts } from '@/data/posts'
 import { formatDate } from '@/lib/utils'
@@ -12,9 +13,10 @@ export default function Blog() {
 
   return (
     <>
-      <SEO
+      <PageSEO
         title="Blog"
         description="Notes, drafts, and occasional epiphanies on product, code, and the strange overlap of the two."
+        jsonLd={blogIndexJsonLd(posts)}
       />
 
       {/* Page Header */}

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/verify-analytics-build.mjs",
+    "build": "tsc -b && vite build && node scripts/generate-sitemap.mjs && node scripts/prerender.mjs && node scripts/verify-analytics-build.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -36,6 +36,7 @@
     "globals": "^16.5.0",
     "gray-matter": "^4.0.3",
     "postcss": "^8.5.6",
+    "puppeteer": "^25.1.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^3.4.18",

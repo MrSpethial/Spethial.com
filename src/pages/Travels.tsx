@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
 import TravelCard from '@/components/travel/TravelCard'
 
 import TravelFilters from '@/components/travel/TravelFilters'
@@ -56,7 +56,7 @@ export default function Travels() {
 
   return (
     <>
-      <SEO
+      <PageSEO
         title="Travels"
         description="Explore travel adventures around the world. Favourite destinations, recommendations, and memories."
       />

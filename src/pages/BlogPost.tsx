@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { Suspense, lazy, useEffect, useState } from 'react'
-import SEO from '@/components/SEO'
+import PageSEO from '@/components/PageSEO'
+import { blogPostingJsonLd } from '@/lib/jsonLd'
 import { TagList } from '@/components/Tag'
 import { getPostBySlug } from '@/data/posts'
 import { formatDate } from '@/lib/utils'
@@ -31,19 +32,19 @@ function ReadingProgress() {
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
-
-  if (!slug) return <Navigate to="/blog" replace />
-
-  const post = getPostBySlug(slug)
-  const PostContent = postComponents[slug]
+  const post = slug ? getPostBySlug(slug) : undefined
+  const PostContent = slug ? postComponents[slug] : undefined
 
   useEffect(() => {
     if (post) trackBlogPost(post.title, post.slug, post.tags ?? [])
   }, [post])
 
+  if (!slug) return <Navigate to="/blog" replace />
+
   if (!post || !PostContent) {
     return (
       <section className="py-24">
+        <PageSEO title="Post Not Found" noIndex />
         <div className="container-main">
           <div className="max-w-3xl text-center">
             <h1 className="text-3xl font-medium mb-4">Post Not Found</h1>
@@ -63,7 +64,14 @@ export default function BlogPost() {
   return (
     <>
       <ReadingProgress />
-      <SEO title={post.title} description={post.description} ogType="article" />
+      <PageSEO
+        title={post.title}
+        description={post.description}
+        ogType="article"
+        publishedTime={`${post.date}T00:00:00.000Z`}
+        tags={post.tags}
+        jsonLd={blogPostingJsonLd(post)}
+      />
 
       <article className="py-24">
         <div className="container-main">
@@ -75,7 +83,7 @@ export default function BlogPost() {
 
             <header className="mb-12">
               <div className="flex items-center gap-3 mb-4 font-mono text-xs" style={{ color: 'var(--ink-mute)' }}>
-                <time>{formatDate(post.date)}</time>
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
               </div>
               <h1 className="text-[clamp(28px,4vw,48px)] font-medium tracking-[-0.02em] leading-[1.08] mb-4">{post.title}</h1>
               <TagList tags={post.tags} />
