@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://spethial.com/sitemap.xml
+Sitemap: https://www.spethial.com/sitemap.xml

@@ -1,7 +1,7 @@
 /** Canonical site origin (no trailing slash). Set via VITE_SITE_URL in production. */
 export const SITE_URL = (
   import.meta.env.VITE_SITE_URL as string | undefined
-)?.replace(/\/$/, '') || 'https://spethial.com'
+)?.replace(/\/$/, '') || 'https://www.spethial.com'
 
 export const SITE_NAME = 'Spethial.com'
 export const DEFAULT_DESCRIPTION =

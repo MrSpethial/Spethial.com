@@ -9,12 +9,6 @@
       "source": "/playground/:path*",
       "destination": "/lab",
       "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.spethial.com" }],
-      "destination": "https://spethial.com/:path*",
-      "permanent": true
     }
   ],
   "rewrites": [

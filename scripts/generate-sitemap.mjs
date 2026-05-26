@@ -10,7 +10,7 @@ import { readBlogPosts, STATIC_PATHS } from './seo-routes.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const env = loadEnv('production', root, '')
-const siteUrl = (process.env.VITE_SITE_URL ?? env.VITE_SITE_URL ?? 'https://spethial.com').replace(
+const siteUrl = (process.env.VITE_SITE_URL ?? env.VITE_SITE_URL ?? 'https://www.spethial.com').replace(
   /\/$/,
   ''
 )
