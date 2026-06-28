@@ -1,4 +1,5 @@
 import { useState, memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   ComposableMap,
   Geographies,
@@ -17,6 +18,12 @@ interface TravelMapProps {
   onCountryClick?: (countryCode: string) => void
   highlightedCountry?: string
   highlightedLocationId?: string
+  /** Country codes that navigate to a hub page instead of filtering */
+  hubCountries?: string[]
+}
+
+const HUB_COUNTRY_ROUTES: Record<string, string> = {
+  JP: '/travels/japan',
 }
 
 function TravelMap({
@@ -24,7 +31,9 @@ function TravelMap({
   onLocationClick,
   onCountryClick,
   highlightedCountry,
+  hubCountries = Object.keys(HUB_COUNTRY_ROUTES),
 }: TravelMapProps) {
+  const navigate = useNavigate()
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null)
   const [tooltipContent, setTooltipContent] = useState<TravelLocation | null>(null)
 
@@ -33,6 +42,15 @@ function TravelMap({
     new Map(travels.map(t => [t.countryCode, { code: t.countryCode, name: t.country }])).values()
   )
   const visitedCountryCodes = new Set(travels.map(t => t.countryCode))
+
+  const handleCountryAction = (countryCode: string) => {
+    const hubRoute = HUB_COUNTRY_ROUTES[countryCode]
+    if (hubCountries.includes(countryCode) && hubRoute) {
+      navigate(hubRoute)
+      return
+    }
+    onCountryClick?.(countryCode)
+  }
 
   return (
     <div className="relative w-full aspect-[2/1] rounded-[var(--r-lg)] overflow-hidden" style={{ border: '1px solid var(--border)', background: 'var(--bg-elev-1)' }}>
@@ -54,7 +72,7 @@ function TravelMap({
                     key={geo.rsmKey}
                     geography={geo}
                     onClick={() => {
-                      if (isVisited && onCountryClick) onCountryClick(countryCode)
+                      if (isVisited) handleCountryAction(countryCode)
                     }}
                     style={{
                       default: {
@@ -102,6 +120,8 @@ function TravelMap({
           {travelsWithCoords.map((travel) => {
             const isHovered = hoveredLocation === travel.id
             const isHighlightedByCountry = highlightedCountry === travel.countryCode
+            const isPlanned = travel.status === 'planned'
+            const markerFill = isPlanned || travel.isFavorite ? '#ffb088' : '#64ffda'
 
             return (
               <Marker
@@ -117,28 +137,29 @@ function TravelMap({
                 }}
                 onClick={() => {
                   onLocationClick?.(travel)
-                  onCountryClick?.(travel.countryCode)
+                  if (!onLocationClick) handleCountryAction(travel.countryCode)
                 }}
               >
                 <circle
                   r={isHovered || isHighlightedByCountry ? 6 : 4}
-                  fill={travel.isFavorite ? '#ffb088' : '#64ffda'}
+                  fill={markerFill}
                   stroke="rgba(255,255,255,0.8)"
                   strokeWidth={2}
+                  strokeDasharray={isPlanned ? '3 2' : undefined}
                   style={{
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
                     filter: isHovered ? 'drop-shadow(0 0 6px rgba(100,255,218,0.6))' : 'none',
                   }}
                 />
-                {travel.isFavorite && (
+                {(travel.isFavorite || isPlanned) && (
                   <circle
                     r={8}
                     fill="none"
                     stroke="#ffb088"
                     strokeWidth={1}
                     opacity={0.5}
-                    className="animate-ping"
+                    className={isPlanned ? 'animate-pulse' : 'animate-ping'}
                   />
                 )}
               </Marker>
@@ -157,7 +178,8 @@ function TravelMap({
                 <div className="font-medium text-sm">{tooltipContent.city}</div>
                 <div className="text-xs" style={{ color: 'var(--ink-mute)' }}>
                   {tooltipContent.country}
-                  {tooltipContent.isFavorite && ' · Favourite'}
+                  {tooltipContent.status === 'planned' && ' · Planned'}
+                  {tooltipContent.isFavorite && tooltipContent.status !== 'planned' && ' · Favourite'}
                 </div>
               </div>
             </div>
@@ -171,7 +193,7 @@ function TravelMap({
           {uniqueCountries.map(({ code, name }) => (
             <button
               key={code}
-              onClick={() => onCountryClick?.(code)}
+              onClick={() => handleCountryAction(code)}
               className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                 highlightedCountry === code
                   ? 'bg-sp-teal text-[#07111c] scale-105'
@@ -193,7 +215,7 @@ function TravelMap({
       {/* Instructions */}
       <div className="absolute top-3 right-3 z-20">
         <div className="backdrop-blur-sm rounded-[var(--r-md)] px-2 py-1 text-xs font-mono" style={{ background: 'rgba(14,19,32,0.85)', color: 'var(--ink-mute)', border: '1px solid var(--border)' }}>
-          Click markers or countries to filter
+          Click markers or countries to explore
         </div>
       </div>
     </div>

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&display=swap');
+
+.font-japan-display {
+  font-family: 'Shippori Mincho', Georgia, serif;
+}
+
+:root {
+  --phase-a: #2e7d6b;
+  --phase-b: #b5651d;
+  --phase-c: #a23b5e;
+  --phase-air: #6b7280;
+  --phase-trans: #c9a06a;
+}
+
+.japan-map-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 1000;
+}
+
+@keyframes japan-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.japan-reveal {
+  animation: japan-fade-up 0.5s var(--ease, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
+}
+
+.japan-reveal-delay-1 { animation-delay: 0.08s; }
+.japan-reveal-delay-2 { animation-delay: 0.16s; }
+.japan-reveal-delay-3 { animation-delay: 0.24s; }
+.japan-reveal-delay-4 { animation-delay: 0.32s; }
+
+@keyframes japan-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 0; }
+}
+
+.japan-marker-pulse {
+  animation: japan-pulse 2s ease-in-out infinite;
+}

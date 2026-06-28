@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import Layout from '@/components/Layout'
@@ -10,6 +10,17 @@ import Admin from '@/pages/Admin'
 import Travels from '@/pages/Travels'
 import Music from '@/pages/Music'
 import { trackPageViewAfterTitle } from '@/lib/analytics'
+
+const JapanHub = lazy(() => import('@/pages/JapanHub'))
+const JapanTrip2026 = lazy(() => import('@/pages/JapanTrip2026'))
+
+function RouteFallback() {
+  return (
+    <div className="min-h-[40vh] flex items-center justify-center" style={{ color: 'var(--ink-mute)' }}>
+      Loading…
+    </div>
+  )
+}
 
 function TrackPageViews() {
   const location = useLocation()
@@ -43,6 +54,22 @@ function App() {
             <Route path="/lab" element={<Lab />} />
             <Route path="/playground" element={<Navigate to="/lab" replace />} />
             <Route path="/travels" element={<Travels />} />
+            <Route
+              path="/travels/japan"
+              element={
+                <Suspense fallback={<RouteFallback />}>
+                  <JapanHub />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/travels/japan/2026"
+              element={
+                <Suspense fallback={<RouteFallback />}>
+                  <JapanTrip2026 />
+                </Suspense>
+              }
+            />
             <Route path="/music" element={<Music />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>

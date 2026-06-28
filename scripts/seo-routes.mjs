@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
-export const STATIC_PATHS = ['/', '/blog', '/lab', '/travels', '/music']
+export const STATIC_PATHS = ['/', '/blog', '/lab', '/travels', '/travels/japan', '/travels/japan/2026', '/music']
 
 /** @returns {{ slug: string, date: string }[]} */
 export function readBlogPosts() {

@@ -1,0 +1,89 @@
+.leaflet-container {
+  background: var(--bg-elev-1, #0e1320);
+  font-family: var(--font-sans);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--surface, #182238);
+  color: var(--ink, #eef1f8);
+  border: 1px solid var(--border, #1f2a44);
+  border-radius: var(--r-md, 10px);
+  box-shadow: var(--shadow-2, 0 8px 24px rgba(0, 0, 0, 0.35));
+}
+
+.leaflet-popup-tip {
+  background: var(--surface, #182238);
+  border: 1px solid var(--border, #1f2a44);
+}
+
+.leaflet-popup-content {
+  margin: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.leaflet-control-attribution {
+  background: rgba(14, 19, 32, 0.85) !important;
+  color: var(--ink-mute, #7a849e) !important;
+  font-size: 10px !important;
+  backdrop-filter: blur(4px);
+}
+
+.leaflet-control-attribution a {
+  color: var(--teal, #64ffda) !important;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--border, #1f2a44) !important;
+  box-shadow: none !important;
+}
+
+.leaflet-bar a {
+  background: rgba(14, 19, 32, 0.9) !important;
+  color: var(--ink-soft, #b8c0d4) !important;
+  border-bottom-color: var(--border, #1f2a44) !important;
+}
+
+.leaflet-bar a:hover {
+  background: var(--bg-elev-2, #131a2b) !important;
+  color: var(--teal, #64ffda) !important;
+}
+
+.leaflet-control-zoom {
+  border-radius: var(--r-sm, 6px) !important;
+  overflow: hidden;
+}
+
+.japan-map-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.japan-map-marker:hover,
+.japan-map-marker.selected {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px var(--teal-glow, rgba(100, 255, 218, 0.45));
+}
+
+.japan-map-marker.wishlist {
+  opacity: 0.65;
+  border-style: dashed;
+}
+
+.japan-map-marker.trail {
+  border-radius: 4px;
+  transform: rotate(45deg);
+}
+
+.japan-map-marker.trail:hover {
+  transform: rotate(45deg) scale(1.15);
+}
+
+.japan-map-marker.race {
+  border-radius: 4px;
+}

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import PageSEO from '@/components/PageSEO'
 import TravelCard from '@/components/travel/TravelCard'
 
@@ -16,6 +17,7 @@ import {
 import { trackEvent } from '@/lib/analytics'
 
 export default function Travels() {
+  const navigate = useNavigate()
   const [filters, setFilters] = useState<TravelFiltersType>({})
   const [sortBy, setSortBy] = useState<SortOption>('rating')
   const [viewMode, setViewMode] = useState<'grid' | 'timeline'>('grid')
@@ -46,12 +48,30 @@ export default function Travels() {
   }
 
   const handleCountryClick = (countryCode: string) => {
+    if (countryCode === 'JP') {
+      trackEvent('travel_country_click', { country: countryCode, destination: 'japan_hub' })
+      navigate('/travels/japan')
+      return
+    }
     if (filters.country === countryCode) {
       setFilters({ ...filters, country: undefined })
     } else {
       setFilters({ ...filters, country: countryCode })
     }
     trackEvent('travel_country_click', { country: countryCode })
+  }
+
+  const handleLocationClick = (travel: (typeof allTravels)[number]) => {
+    if (travel.status === 'planned' && travel.tripSlug) {
+      navigate(travel.tripSlug)
+      return
+    }
+    if (filters.country === travel.countryCode) {
+      setFilters({ ...filters, country: undefined })
+    } else {
+      setFilters({ ...filters, country: travel.countryCode })
+    }
+    trackEvent('travel_location_click', { travel_id: travel.id, country: travel.countryCode })
   }
 
   return (
@@ -86,9 +106,18 @@ export default function Travels() {
         <div className="container-main">
           <TravelMap
             travels={allTravels}
+            onLocationClick={handleLocationClick}
             onCountryClick={handleCountryClick}
             highlightedCountry={filters.country}
           />
+          <div className="mt-4 text-center">
+            <Link
+              to="/travels/japan/2026"
+              className="inline-flex items-center gap-2 text-sm text-sp-teal hover:underline"
+            >
+              Japan 2026 itinerary & map →
+            </Link>
+          </div>
         </div>
       </section>
 

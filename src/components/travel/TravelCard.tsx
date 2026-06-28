@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import type { TravelLocation } from '@/data/travels'
 import { formatDateRange, getCountryFlag } from '@/lib/utils'
 import { StarIconSolid, StarIcon, ChevronDownIcon, MapPinIcon } from '@/components/Icons'
@@ -13,36 +14,41 @@ export default function TravelCard({ travel, onCountryClick }: TravelCardProps) 
 
   const flag = getCountryFlag(travel.countryCode)
   const hasRecommendations = travel.recommendations && travel.recommendations.length > 0
+  const isPlanned = travel.status === 'planned'
 
-  return (
-    <article className="card group relative overflow-hidden">
-      {/* Favorite Badge */}
-      {travel.isFavorite && (
+  const cardInner = (
+    <>
+      {/* Status / Favorite Badge */}
+      {(travel.isFavorite || isPlanned) && (
         <div className="absolute top-3 right-3 z-10">
           <span className="tag tag-amber text-[10px]">
-            <StarIconSolid className="h-3 w-3" />
-            FAVOURITE
+            {isPlanned ? (
+              'PLANNED'
+            ) : (
+              <>
+                <StarIconSolid className="h-3 w-3" />
+                FAVOURITE
+              </>
+            )}
           </span>
         </div>
       )}
 
       {/* Header */}
       <div className="flex items-start gap-3 mb-4">
-        <button
-          onClick={() => onCountryClick?.(travel.countryCode)}
-          className="text-3xl hover:scale-110 transition-transform"
-          title={`View all trips to ${travel.country}`}
-        >
-          {flag}
-        </button>
+        <span className="text-3xl">{flag}</span>
         <div className="flex-1 min-w-0 pr-20">
           <h3 className="text-xl font-medium truncate">{travel.city}</h3>
-          <button
-            onClick={() => onCountryClick?.(travel.countryCode)}
-            className="text-sp-ink-mute hover:text-sp-teal transition-colors"
-          >
-            {travel.country}
-          </button>
+          {isPlanned ? (
+            <span className="text-sp-ink-mute">{travel.country}</span>
+          ) : (
+            <button
+              onClick={() => onCountryClick?.(travel.countryCode)}
+              className="text-sp-ink-mute hover:text-sp-teal transition-colors"
+            >
+              {travel.country}
+            </button>
+          )}
         </div>
       </div>
 
@@ -85,26 +91,48 @@ export default function TravelCard({ travel, onCountryClick }: TravelCardProps) 
       {/* Recommendations */}
       {hasRecommendations && (
         <div className="border-t pt-4 mt-4" style={{ borderColor: 'var(--border)' }}>
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center justify-between w-full text-left text-sm font-medium hover:text-sp-teal transition-colors"
-            aria-expanded={isExpanded}
-          >
-            <span>Recommendations ({travel.recommendations!.length})</span>
-            <ChevronDownIcon className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-          </button>
-          {isExpanded && (
-            <ul className="mt-3 space-y-2">
-              {travel.recommendations!.map((rec, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm" style={{ color: 'var(--ink-soft)' }}>
-                  <span className="text-sp-teal mt-0.5">·</span>
-                  <span>{rec}</span>
-                </li>
-              ))}
-            </ul>
+          {isPlanned ? (
+            <p className="text-sm font-medium" style={{ color: 'var(--ink-soft)' }}>
+              {travel.recommendations!.length} highlights — view itinerary →
+            </p>
+          ) : (
+            <>
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="flex items-center justify-between w-full text-left text-sm font-medium hover:text-sp-teal transition-colors"
+                aria-expanded={isExpanded}
+              >
+                <span>Recommendations ({travel.recommendations!.length})</span>
+                <ChevronDownIcon className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+              </button>
+              {isExpanded && (
+                <ul className="mt-3 space-y-2">
+                  {travel.recommendations!.map((rec, index) => (
+                    <li key={index} className="flex items-start gap-2 text-sm" style={{ color: 'var(--ink-soft)' }}>
+                      <span className="text-sp-teal mt-0.5">·</span>
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
           )}
         </div>
       )}
+    </>
+  )
+
+  if (isPlanned && travel.tripSlug) {
+    return (
+      <Link to={travel.tripSlug} className="card group relative overflow-hidden block hover:border-sp-teal/40 transition-colors">
+        {cardInner}
+      </Link>
+    )
+  }
+
+  return (
+    <article className="card group relative overflow-hidden">
+      {cardInner}
     </article>
   )
 }

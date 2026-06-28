@@ -7,6 +7,8 @@
  * Priority features: Favorites & Ratings (per user preference)
  */
 
+export type TravelStatus = 'visited' | 'planned'
+
 export interface TravelLocation {
   id: string
   city: string
@@ -20,6 +22,8 @@ export interface TravelLocation {
     start: string            // ISO date (YYYY-MM-DD)
     end?: string             // Optional end date for trips
   }
+  status?: TravelStatus      // Defaults to 'visited'
+  tripSlug?: string          // Deep link to trip detail page (e.g. /travels/japan/2026)
   notes?: string             // Personal notes/memories
   recommendations?: string[] // Places/things to recommend
   isFavorite: boolean        // Mark as favorite destination
@@ -37,6 +41,27 @@ export interface TravelStats {
 
 // Sample travel data - edit this array to add/modify travels
 export const travels: TravelLocation[] = [
+  {
+    id: 'japan-2026',
+    city: 'Japan',
+    country: 'Japan',
+    countryCode: 'JP',
+    coordinates: { lat: 35.6762, lng: 136.5 },
+    visitDate: {
+      start: '2026-11-04',
+      end: '2026-11-27',
+    },
+    status: 'planned',
+    tripSlug: '/travels/japan/2026',
+    notes: '24-day walking trip through Kanazawa, Kiso Valley, Kumano Kodo, Kyoto and Nara — sequenced for peak autumn colour.',
+    recommendations: [
+      'Magome → Tsumago Nakasendo walk',
+      'Kumano Kodo Nakahechi pilgrimage',
+      'Eikandō temple for peak foliage in Kyoto',
+    ],
+    isFavorite: true,
+    tags: ['walk', 'temple', 'foliage', 'culture', 'food'],
+  },
   {
     id: 'tokyo-2024',
     city: 'Tokyo',
@@ -159,6 +184,13 @@ export const travels: TravelLocation[] = [
   },
 ]
 
+/** Trips that have actually been taken (excludes status: 'planned'). */
+export function isVisitedTravel(travel: TravelLocation): boolean {
+  return travel.status !== 'planned'
+}
+
+const visitedTravels = () => travels.filter(isVisitedTravel)
+
 // Helper functions
 
 /**
@@ -197,7 +229,7 @@ export function getTravelById(id: string): TravelLocation | undefined {
 export function getVisitedCountries(): { code: string; name: string; count: number }[] {
   const countryMap = new Map<string, { name: string; count: number }>()
 
-  travels.forEach(travel => {
+  visitedTravels().forEach(travel => {
     const existing = countryMap.get(travel.countryCode)
     if (existing) {
       existing.count++
@@ -226,14 +258,15 @@ export function getAllTags(): string[] {
  * Get travel statistics
  */
 export function getTravelStats(): TravelStats {
-  const countries = new Set(travels.map(t => t.countryCode))
-  const cities = new Set(travels.map(t => t.city))
+  const visited = visitedTravels()
+  const countries = new Set(visited.map(t => t.countryCode))
+  const cities = new Set(visited.map(t => t.city))
 
   return {
     totalCountries: countries.size,
     totalCities: cities.size,
-    totalTrips: travels.length,
-    favoriteCount: travels.filter(t => t.isFavorite).length,
+    totalTrips: visited.length,
+    favoriteCount: visited.filter(t => t.isFavorite).length,
   }
 }
 
